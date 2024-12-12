@@ -5,7 +5,7 @@
 #include <freertos/task.h>
 #include <freertos/semphr.h>
 
-#include "defines.h"
+#include "ErrorList.h"
 
 /**
  * @version 1.0
@@ -20,6 +20,9 @@ class Relay{
         uint8_t pinLed;
         String name;
         bool status;
+
+        void (*func_ON)(void);
+        void (*func_OFF)(void);
 
     public:
 
@@ -45,6 +48,7 @@ class Relay{
          * @return error if something do not work or init with error in another events return OK
          */
         ErrorList init(String name, uint8_t pinRelay, uint8_t pinLed);
+
 
         /**
          * 
@@ -74,6 +78,30 @@ class Relay{
 
 
         /**
+         * 
+         * @brief Manual off relay
+         * 
+         * @return Error if something was wrong
+         */
+        ErrorList offRelay();
+
+        /**
+         * 
+         * @brief Manual on relay
+         * 
+         * @return Error if something was wrong
+         */        
+        ErrorList onRelay();
+
+
+
+        /**
+         * ----------------------------------------------------------------------------------------------------------------
+         * --------------------------- Automatic controle -----------------------------------------------------------------
+         * ----------------------------------------------------------------------------------------------------------------
+         */
+
+        /**
          * @brief Toggles the relay state.
          * 
          * This function changes the relay state to its opposite value.
@@ -91,7 +119,7 @@ class Relay{
          * @return Error list. if all okey return OK else error code
          * 
          */
-        ErrorList offRelay();
+        ErrorList offState();
 
 
         /**
@@ -101,15 +129,7 @@ class Relay{
          * @return Error list. if all okey return OK else error code
          * 
          */
-        ErrorList onRelay();
-
-
-
-        /**
-         * ----------------------------------------------------------------------------------------------------------------
-         * --------------------------- Automatic controle -----------------------------------------------------------------
-         * ----------------------------------------------------------------------------------------------------------------
-         */
+        ErrorList onState();
 
 
         /**
@@ -178,6 +198,17 @@ class Relay{
 
 
     /**
+     * @brief set function on on relay
+     */
+    void setOnFunc(void (*onFunc)(void));
+
+    /**
+     * @brief set function on off relay
+     */
+    void setOffFunc(void (*offFunc)(void));
+
+
+    /**
      * ----------------------------------------------------------------------------------------------------------------
      * --------------------------- Getters ----------------------------------------------------------------------------
      * ----------------------------------------------------------------------------------------------------------------
@@ -209,6 +240,98 @@ class Relay{
      * @return String name relay
      */
     String getRelayName();
+
+
+
+
+    private:
+/**
+ * ____________________________________________________________________________________________________________________
+ * _______________________________ Service logic ______________________________________________________________________
+ * ____________________________________________________________________________________________________________________
+ */
+
+
+        /**
+         * ----------------------------------------------------------------------------------------------------------------
+         * --------------------------- Objectc values checkers ----------------------------------------------------------------------------
+         * ----------------------------------------------------------------------------------------------------------------
+         */
+
+
+        /**
+         * @brief Check errors in values
+         * 
+         * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
+         */
+        ErrorList checkValues();
+
+
+        /**
+         * @brief Check pin relay corect or uncorect his
+         * @note Check values of pin inside object. If valuer is uncorect return error 
+         * 
+         * @return ERR_VALUER_UNCORECT if GPIO pin are incorect or ALL_OK if all good
+         */
+        ErrorList checkObjectPinRelay();
+
+
+        /**
+         * @brief Check pin led corect or uncorect his
+         * @note Check values of pin inside object. If valuer is uncorect return error 
+         * 
+         * @return ERR_VALUER_UNCORECT if GPIO pin are incorect or ALL_OK if all good
+         */
+        ErrorList checkObjectPinLed();
+
+        /**
+         * @brief Check name
+         * @note Check values of name inside object. If name is uncorect (empty) return error 
+         * 
+         * @return ERR_VALUER_EMPTY - name uncorect
+         */
+        ErrorList checkObjectName();
+
+
+        /**
+         * ----------------------------------------------------------------------------------------------------------------
+         * --------------------------- External values checkers ----------------------------------------------------------------------------
+         * ----------------------------------------------------------------------------------------------------------------
+         */
+
+
+        /**
+         * @brief Check external pin
+         * @note if something is not good return err
+         * 
+         * @param pin external pin for check
+         * 
+         * @return ERR_VALUER_UNCORECT if GPIO pin are incorects else ALL_OK
+         */
+        ErrorList checkPin(uint8_t pin);
+
+
+        /**
+         * @brief Check input name
+         * @note if something is not good return err
+         * 
+         * @param name name for check
+         * 
+         * @return ERR_VALUER_EMPTY - name uncorect
+         */
+        ErrorList checkName(String name);
+
+        /**
+         * @brief Check all param 
+         * @note Check all params to insert in object or to use
+         * 
+         * @param name - name relay
+         * @param pinRelay - GPIO pin number (relay)
+         * @param pinRelay - GPIO pin number (led)
+         * 
+         * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
+         */
+        ErrorList checkAllValues(String name, uint8_t pinRelay, uint8_t pinLed);
 
 
 

@@ -1,5 +1,5 @@
-#ifndef DEF_BLOCK
-#define DEF_BLOCK
+#ifndef ERR_BLOCK
+#define ERR_BLOCK
 
 typedef enum ErrorList{
     ALL_OK,
@@ -7,6 +7,7 @@ typedef enum ErrorList{
     ERR_VALUER_UNCORECT,
     ERR_VALUER_EMPTY,
     ERR_NOT_FOUND,
+    ERR_NULL_VALUER
 }ErrorList;
 
 #endif
