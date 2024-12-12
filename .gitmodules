@@ -1,0 +1,3 @@
+[submodule "RelayControleLib"]
+	path = RelayControleLib
+	url = https://github.com/IgorIoT13/RelayControleLib.git
