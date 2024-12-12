@@ -21,6 +21,10 @@ class Relay{
         String name;
         bool status;
 
+        void *func_ON(void);
+        void *func_OFF(void);
+        void *func_Change(void);
+
     public:
 
         /**
@@ -74,6 +78,30 @@ class Relay{
 
 
         /**
+         * 
+         * @brief Manual off relay
+         * 
+         * @return Error if something was wrong
+         */
+        ErrorList offRelay();
+
+        /**
+         * 
+         * @brief Manual on relay
+         * 
+         * @return Error if something was wrong
+         */        
+        ErrorList onRelay();
+
+
+
+        /**
+         * ----------------------------------------------------------------------------------------------------------------
+         * --------------------------- Automatic controle -----------------------------------------------------------------
+         * ----------------------------------------------------------------------------------------------------------------
+         */
+
+        /**
          * @brief Toggles the relay state.
          * 
          * This function changes the relay state to its opposite value.
@@ -91,7 +119,7 @@ class Relay{
          * @return Error list. if all okey return OK else error code
          * 
          */
-        ErrorList offRelay();
+        ErrorList offState();
 
 
         /**
@@ -101,15 +129,7 @@ class Relay{
          * @return Error list. if all okey return OK else error code
          * 
          */
-        ErrorList onRelay();
-
-
-
-        /**
-         * ----------------------------------------------------------------------------------------------------------------
-         * --------------------------- Automatic controle -----------------------------------------------------------------
-         * ----------------------------------------------------------------------------------------------------------------
-         */
+        ErrorList onState();
 
 
         /**

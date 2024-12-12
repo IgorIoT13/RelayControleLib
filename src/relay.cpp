@@ -1,5 +1,6 @@
 #include <relay.h>
 
+
 Relay::Relay(String name, uint8_t pinRelay, uint8_t pinLed){
     this->init(name, pinRelay, pinLed);
 }
@@ -26,7 +27,6 @@ ErrorList Relay::begin(){
         return err;
     }
 
-
     this->status = false;
     pinMode(this->pinRelay, OUTPUT);
     pinMode(this->pinLed, OUTPUT);
@@ -38,6 +38,42 @@ ErrorList Relay::begin(){
 
 }
 
+        /**
+         * ----------------------------------------------------------------------------------------------------------------
+         * --------------------------- Manual contole state ---------------------------------------------------------------
+         * ----------------------------------------------------------------------------------------------------------------
+         */
+
+ErrorList Relay::offRelay(){
+    ErrorList err = this->checkValues();
+    if(err != ALL_OK){
+        return err;
+    }
+
+    this->status = false;
+    digitalWrite(this->pinLed, LOW);
+    digitalWrite(this->pinRelay, LOW);
+    return ALL_OK;
+}
+
+
+ErrorList Relay::onRelay(){
+    ErrorList err = this->checkValues();
+    if(err != ALL_OK){
+        return err;
+    }
+    this->status = true;
+    digitalWrite(this->pinLed, HIGH);
+    digitalWrite(this->pinRelay, HIGH);
+    return ALL_OK;
+}
+
+    /**
+     * ----------------------------------------------------------------------------------------------------------------
+     * --------------------------- Automatic controle -----------------------------------------------------------------
+     * ----------------------------------------------------------------------------------------------------------------
+     */
+
 
 bool Relay::changeState(){
     if(this->status){
@@ -48,42 +84,84 @@ bool Relay::changeState(){
     return this->status;
 }
 
-ErrorList Relay::offRelay(){
+
+ErrorList Relay::offState(){
     ErrorList err = this->checkValues();
     if(err != ALL_OK){
         return err;
     }
-
-    return ALL_OK;
+    this->status = false;
+    return err;
 }
 
-ErrorList Relay::onRelay(){
+ErrorList Relay::onState(){
     ErrorList err = this->checkValues();
     if(err != ALL_OK){
         return err;
     }
-
-    return ALL_OK;
+    this->status = true;
+    return err;
 }
 
 
- ErrorList Relay::tick(){
+ErrorList Relay::tick(){
+
+    if(status){
+        if(this->status != digitalRead(this->pinRelay)) this->onRelay();
+    }else{
+        if(this->status != digitalRead(this->pinRelay)) this->offRelay();
+    }
 
     return ALL_OK;
  }
 
 
+    /**
+     * ----------------------------------------------------------------------------------------------------------------
+     * --------------------------- Setters ----------------------------------------------------------------------------
+     * ----------------------------------------------------------------------------------------------------------------
+     */
 
 
- ErrorList Relay::setName(String newName){}
+ ErrorList Relay::setName(String newName){
+    ErrorList err = this->checkName(newName);
+    if(err == ALL_OK){
+        this->name = newName;
+    }
+    return err;
+ }
 
- ErrorList Relay::setRelayPin(uint8_t newPinRelay){}
+ ErrorList Relay::setRelayPin(uint8_t newPinRelay){
+    ErrorList err = this->checkPin(newPinRelay);
+    if(err == ALL_OK){
+        this->pinRelay = newPinRelay;
+    }
+    return err;
+ }
 
- ErrorList Relay::setLedPin(uint8_t newPinLed){}
+ ErrorList Relay::setLedPin(uint8_t newPinLed){
+    ErrorList err = this->checkPin(newPinLed);
+    if(err == ALL_OK){
+        this->pinLed = newPinLed;
+    }
+    return err;
+ }
 
- uint8_t Relay::getRelayPin(){}
- uint8_t Relay::getLedPin(){}
- String Relay::getRelayName(){}
+    /**
+     * ----------------------------------------------------------------------------------------------------------------
+     * --------------------------- Getters ----------------------------------------------------------------------------
+     * ----------------------------------------------------------------------------------------------------------------
+     */
+
+ uint8_t Relay::getRelayPin(){
+    return this->pinRelay;
+ }
+ uint8_t Relay::getLedPin(){
+    return this->pinLed;
+ }
+ String Relay::getRelayName(){
+    return this->name;
+ }
 
     /**
      * ----------------------------------------------------------------------------------------------------------------
@@ -99,7 +177,6 @@ ErrorList Relay::onRelay(){
     }
     
  }
-
 
 
 ErrorList Relay::checkObjectPinRelay(){ 
