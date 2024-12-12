@@ -34,6 +34,8 @@ ErrorList Relay::begin(){
     digitalWrite(this->pinRelay, LOW);
     digitalWrite(this->pinLed, LOW);
 
+    return ALL_OK;
+
 }
 
 
@@ -52,6 +54,7 @@ ErrorList Relay::offRelay(){
         return err;
     }
 
+    return ALL_OK;
 }
 
 ErrorList Relay::onRelay(){
@@ -59,4 +62,35 @@ ErrorList Relay::onRelay(){
     if(err != ALL_OK){
         return err;
     }
+
+    return ALL_OK;
 }
+
+
+ ErrorList Relay::tick(){
+
+    return ALL_OK;
+ }
+
+
+
+
+ ErrorList Relay::setName(String newName){}
+
+ ErrorList Relay::setRelayPin(uint8_t newPinRelay){}
+
+ ErrorList Relay::setLedPin(uint8_t newPinLed){}
+
+ uint8_t Relay::getRelayPin(){}
+ uint8_t Relay::getLedPin(){}
+ String Relay::getRelayName(){}
+
+ ErrorList Relay::checkValues(){
+    if(!this->name || this->name == "" || this->name == " "){
+        return ERR_VALUER_EMPTY;
+    }else if(this->pinRelay > 40 || this->pinLed > 40){
+        return ERR_VALUER_UNCORECT;
+    }else{
+        return ALL_OK;
+    }
+ }

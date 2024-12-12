@@ -222,11 +222,68 @@ class Relay{
 
 
         /**
+         * ----------------------------------------------------------------------------------------------------------------
+         * --------------------------- Objectc values checkers ----------------------------------------------------------------------------
+         * ----------------------------------------------------------------------------------------------------------------
+         */
+
+
+        /**
          * @brief Check errors in values
          * 
          * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
          */
         ErrorList checkValues();
+
+        /**
+         * @brief Check errors in values
+         * 
+         * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
+         */
+        ErrorList checkObjectPinRelay();
+
+        /**
+         * @brief Check errors in values
+         * 
+         * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
+         */
+        ErrorList checkObjectPinLed();
+
+        /**
+         * @brief Check errors in values
+         * 
+         * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
+         */
+        ErrorList checkObjectName();
+
+
+        /**
+         * ----------------------------------------------------------------------------------------------------------------
+         * --------------------------- External values checkers ----------------------------------------------------------------------------
+         * ----------------------------------------------------------------------------------------------------------------
+         */
+
+
+        /**
+         * @brief Check errors in values
+         * 
+         * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
+         */
+        ErrorList checkPin(uint8_t pin);
+
+        /**
+         * @brief Check errors in values
+         * 
+         * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
+         */
+        ErrorList checkName(String name);
+
+        /**
+         * @brief Check errors in values
+         * 
+         * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
+         */
+        ErrorList checkAllValues(String name, uint8_t pinRelay, uint8_t pinLed);
 
 
 
