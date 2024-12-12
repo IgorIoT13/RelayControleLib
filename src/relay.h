@@ -5,7 +5,7 @@
 #include <freertos/task.h>
 #include <freertos/semphr.h>
 
-#include <defines.h>
+#include "defines.h"
 
 /**
  * @version 1.0
