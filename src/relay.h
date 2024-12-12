@@ -238,7 +238,6 @@ class Relay{
 
         /**
          * @brief Check pin relay corect or uncorect his
-         * 
          * @note Check values of pin inside object. If valuer is uncorect return error 
          * 
          * @return ERR_VALUER_UNCORECT if GPIO pin are incorect or ALL_OK if all good
@@ -248,7 +247,6 @@ class Relay{
 
         /**
          * @brief Check pin led corect or uncorect his
-         * 
          * @note Check values of pin inside object. If valuer is uncorect return error 
          * 
          * @return ERR_VALUER_UNCORECT if GPIO pin are incorect or ALL_OK if all good
@@ -257,7 +255,6 @@ class Relay{
 
         /**
          * @brief Check name
-         * 
          * @note Check values of name inside object. If name is uncorect (empty) return error 
          * 
          * @return ERR_VALUER_EMPTY - name uncorect
@@ -274,7 +271,6 @@ class Relay{
 
         /**
          * @brief Check external pin
-         * 
          * @note if something is not good return err
          * 
          * @param pin external pin for check
@@ -286,7 +282,6 @@ class Relay{
 
         /**
          * @brief Check input name
-         * 
          * @note if something is not good return err
          * 
          * @param name name for check
