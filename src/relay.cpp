@@ -85,12 +85,78 @@ ErrorList Relay::onRelay(){
  uint8_t Relay::getLedPin(){}
  String Relay::getRelayName(){}
 
+    /**
+     * ----------------------------------------------------------------------------------------------------------------
+     * --------------------------- Objectc values checkers ------------------------------------------------------------
+     * ----------------------------------------------------------------------------------------------------------------
+     */
+
  ErrorList Relay::checkValues(){
-    if(!this->name || this->name == "" || this->name == " "){
-        return ERR_VALUER_EMPTY;
-    }else if(this->pinRelay > 40 || this->pinLed > 40){
+    if(this->name && this->pinRelay && this->pinLed){
+        return this->checkAllValues(this->name, this->pinRelay, this->pinLed);
+    }else{
+        return ERR_NULL_VALUER;
+    }
+    
+ }
+
+
+
+ErrorList Relay::checkObjectPinRelay(){ 
+    if(this->pinRelay){
+        return this->checkPin(this->pinRelay);
+    }else{
+        return ERR_NULL_VALUER;
+    }
+}
+
+ErrorList Relay::checkObjectPinLed(){
+    if(this->pinLed){
+        return this->checkPin(this->pinLed);
+    }else{
+        return ERR_NULL_VALUER;
+    }
+}
+
+ErrorList Relay::checkObjectName(){
+    if(this->name){
+        return this->checkName(this->name);
+    }else{
+        return ERR_NULL_VALUER;
+    }
+}
+
+
+    /**
+     * ----------------------------------------------------------------------------------------------------------------
+     * --------------------------- External values checkers -----------------------------------------------------------
+     * ----------------------------------------------------------------------------------------------------------------
+     */
+
+ErrorList Relay::checkPin(uint8_t pin){
+    if(pin > 40){
         return ERR_VALUER_UNCORECT;
+    }
+    return ALL_OK;
+}
+
+
+ErrorList Relay::checkName(String name){
+    if(!name || name == "" || name == " "){
+        return ERR_VALUER_EMPTY;
+    }
+    return ALL_OK;
+}
+ErrorList Relay::checkAllValues(String name, uint8_t pinRelay, uint8_t pinLed){
+    if(this->checkPin(pinRelay) != ALL_OK){
+        return this->checkPin(pinRelay);
+    }else if(this->checkPin(pinLed) != ALL_OK){
+        return this->checkPin(pinLed);
+    }else if(this->checkName(name) != ALL_OK){
+        return this->checkName(name);
     }else{
         return ALL_OK;
     }
- }
+}
+
+

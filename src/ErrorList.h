@@ -7,6 +7,7 @@ typedef enum ErrorList{
     ERR_VALUER_UNCORECT,
     ERR_VALUER_EMPTY,
     ERR_NOT_FOUND,
+    ERR_NULL_VALUER
 }ErrorList;
 
 #endif
