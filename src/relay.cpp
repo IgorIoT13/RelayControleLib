@@ -34,6 +34,10 @@ ErrorList Relay::begin(){
     digitalWrite(this->pinRelay, LOW);
     digitalWrite(this->pinLed, LOW);
 
+    this->setOnFunc(nullptr);
+    this->setOffFunc(nullptr);
+
+
     return ALL_OK;
 
 }
@@ -53,6 +57,11 @@ ErrorList Relay::offRelay(){
     this->status = false;
     digitalWrite(this->pinLed, LOW);
     digitalWrite(this->pinRelay, LOW);
+
+    if(this->func_OFF != nullptr){
+        this->func_OFF();
+    }
+
     return ALL_OK;
 }
 
@@ -65,6 +74,11 @@ ErrorList Relay::onRelay(){
     this->status = true;
     digitalWrite(this->pinLed, HIGH);
     digitalWrite(this->pinRelay, HIGH);
+
+    if(this->func_ON != nullptr){
+        this->func_ON();
+    }
+
     return ALL_OK;
 }
 
@@ -146,6 +160,24 @@ ErrorList Relay::tick(){
     }
     return err;
  }
+
+
+void Relay::setOnFunc(void(*onFunc)(void)){
+    if(onFunc != nullptr){
+        this->func_ON = onFunc;
+    }else{
+        this->func_ON = nullptr;
+    }
+    
+}
+
+void Relay::setOffFunc(void (*offFunc)(void)){
+    if(offFunc != nullptr){
+        this->func_OFF = offFunc;
+    }else{
+        this->func_OFF = nullptr;
+    }
+}
 
     /**
      * ----------------------------------------------------------------------------------------------------------------

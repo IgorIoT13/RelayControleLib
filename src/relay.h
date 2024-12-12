@@ -21,9 +21,8 @@ class Relay{
         String name;
         bool status;
 
-        void *func_ON(void);
-        void *func_OFF(void);
-        void *func_Change(void);
+        void (*func_ON)(void);
+        void (*func_OFF)(void);
 
     public:
 
@@ -49,6 +48,7 @@ class Relay{
          * @return error if something do not work or init with error in another events return OK
          */
         ErrorList init(String name, uint8_t pinRelay, uint8_t pinLed);
+
 
         /**
          * 
@@ -195,6 +195,17 @@ class Relay{
      * @return Error list (if all okey return OK else error code)
      */
     ErrorList setLedPin(uint8_t newPinLed);
+
+
+    /**
+     * @brief set function on on relay
+     */
+    void setOnFunc(void (*onFunc)(void));
+
+    /**
+     * @brief set function on off relay
+     */
+    void setOffFunc(void (*offFunc)(void));
 
 
     /**
