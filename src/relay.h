@@ -235,24 +235,32 @@ class Relay{
          */
         ErrorList checkValues();
 
+
         /**
-         * @brief Check errors in values
+         * @brief Check pin relay corect or uncorect his
          * 
-         * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
+         * @note Check values of pin inside object. If valuer is uncorect return error 
+         * 
+         * @return ERR_VALUER_UNCORECT if GPIO pin are incorect or ALL_OK if all good
          */
         ErrorList checkObjectPinRelay();
 
+
         /**
-         * @brief Check errors in values
+         * @brief Check pin led corect or uncorect his
          * 
-         * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
+         * @note Check values of pin inside object. If valuer is uncorect return error 
+         * 
+         * @return ERR_VALUER_UNCORECT if GPIO pin are incorect or ALL_OK if all good
          */
         ErrorList checkObjectPinLed();
 
         /**
-         * @brief Check errors in values
+         * @brief Check name
          * 
-         * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
+         * @note Check values of name inside object. If name is uncorect (empty) return error 
+         * 
+         * @return ERR_VALUER_EMPTY - name uncorect
          */
         ErrorList checkObjectName();
 
@@ -265,21 +273,35 @@ class Relay{
 
 
         /**
-         * @brief Check errors in values
+         * @brief Check external pin
          * 
-         * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
+         * @note if something is not good return err
+         * 
+         * @param pin external pin for check
+         * 
+         * @return ERR_VALUER_UNCORECT if GPIO pin are incorects else ALL_OK
          */
         ErrorList checkPin(uint8_t pin);
 
+
         /**
-         * @brief Check errors in values
+         * @brief Check input name
          * 
-         * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
+         * @note if something is not good return err
+         * 
+         * @param name name for check
+         * 
+         * @return ERR_VALUER_EMPTY - name uncorect
          */
         ErrorList checkName(String name);
 
         /**
-         * @brief Check errors in values
+         * @brief Check all param 
+         * @note Check all params to insert in object or to use
+         * 
+         * @param name - name relay
+         * @param pinRelay - GPIO pin number (relay)
+         * @param pinRelay - GPIO pin number (led)
          * 
          * @return ERR_VALUER_EMPTY - name uncorect or ERR_VALUER_UNCORECT if GPIO pin are incorects
          */
