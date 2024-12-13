@@ -20,7 +20,7 @@ class Relay{
         uint8_t pinLed;
         String name;
         bool status;
-        bool enableWork;
+        bool enableWorkState;
 
         void (*func_ON)(void);
         void (*func_OFF)(void);
@@ -103,7 +103,7 @@ class Relay{
          * 
          * @return Error if something was wrong
          */
-        ErrorList disable();
+        ErrorList disableWork();
 
 
         /**
@@ -113,7 +113,7 @@ class Relay{
          * 
          * @return Error if something was wrong
          */
-        ErrorList enable();
+        ErrorList enableWork();
 
 
 

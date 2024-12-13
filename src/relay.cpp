@@ -29,7 +29,7 @@ ErrorList Relay::begin(){
     }
 
     this->status = false;
-    this->enableWork = true;
+    this->enableWorkState = true;
     pinMode(this->pinRelay, OUTPUT);
     pinMode(this->pinLed, OUTPUT);
 
@@ -68,7 +68,7 @@ ErrorList Relay::offRelay(){
 
 ErrorList Relay::onRelay(){
     ErrorList err = this->checkValues();
-    if(err == ALL_OK && this->enableWork){
+    if(err == ALL_OK && this->enableWorkState){
         this->status = true;
         digitalWrite(this->pinLed, HIGH);
         digitalWrite(this->pinRelay, HIGH);
@@ -80,14 +80,16 @@ ErrorList Relay::onRelay(){
     return err;
 }
 
-ErrorList Relay::disable(){
-    this->enableWork = false;
+ErrorList Relay::disableWork(){
+    this->enableWorkState = false;
     this->offState();
+    return ALL_OK;
 }
 
 
-ErrorList Relay::enable(){
-    this->enableWork = true;
+ErrorList Relay::enableWork(){
+    this->enableWorkState = true;
+    return ALL_OK;
 }
 
     /**
@@ -172,6 +174,7 @@ ErrorList Relay::tick(){
 void Relay::setOnFunc(void(*onFunc)(void)){
     if(onFunc != nullptr){
         this->func_ON = onFunc;
+        onFunc();
     }else{
         this->func_ON = nullptr;
     }
