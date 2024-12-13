@@ -20,6 +20,7 @@ class Relay{
         uint8_t pinLed;
         String name;
         bool status;
+        bool enableWork;
 
         void (*func_ON)(void);
         void (*func_OFF)(void);
@@ -85,6 +86,7 @@ class Relay{
          */
         ErrorList offRelay();
 
+
         /**
          * 
          * @brief Manual on relay
@@ -92,6 +94,26 @@ class Relay{
          * @return Error if something was wrong
          */        
         ErrorList onRelay();
+
+
+        /**
+         * @brief Disable work relay(Off)
+         * @note This function turn off tick for relay
+         * 
+         * 
+         * @return Error if something was wrong
+         */
+        ErrorList disable();
+
+
+        /**
+         * @brief Enable work relay(On)
+         * @note This function turn on tick for relay
+         * 
+         * 
+         * @return Error if something was wrong
+         */
+        ErrorList enable();
 
 
 

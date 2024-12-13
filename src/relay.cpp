@@ -15,6 +15,7 @@ ErrorList Relay::init(String name, uint8_t pinRelay, uint8_t pinLed){
         this->name = name;
         this->pinRelay = pinRelay;
         this->pinLed = pinLed;
+        
         return ALL_OK;
     }
 }
@@ -28,6 +29,7 @@ ErrorList Relay::begin(){
     }
 
     this->status = false;
+    this->enableWork = true;
     pinMode(this->pinRelay, OUTPUT);
     pinMode(this->pinLed, OUTPUT);
 
@@ -50,36 +52,42 @@ ErrorList Relay::begin(){
 
 ErrorList Relay::offRelay(){
     ErrorList err = this->checkValues();
-    if(err != ALL_OK){
-        return err;
+    if(err == ALL_OK){
+        this->status = false;
+        digitalWrite(this->pinLed, LOW);
+        digitalWrite(this->pinRelay, LOW);
+
+        if(this->func_OFF != nullptr){
+            this->func_OFF();
+        }
     }
 
-    this->status = false;
-    digitalWrite(this->pinLed, LOW);
-    digitalWrite(this->pinRelay, LOW);
-
-    if(this->func_OFF != nullptr){
-        this->func_OFF();
-    }
-
-    return ALL_OK;
+    return err;
 }
 
 
 ErrorList Relay::onRelay(){
     ErrorList err = this->checkValues();
-    if(err != ALL_OK){
-        return err;
-    }
-    this->status = true;
-    digitalWrite(this->pinLed, HIGH);
-    digitalWrite(this->pinRelay, HIGH);
+    if(err == ALL_OK && this->enableWork){
+        this->status = true;
+        digitalWrite(this->pinLed, HIGH);
+        digitalWrite(this->pinRelay, HIGH);
 
-    if(this->func_ON != nullptr){
-        this->func_ON();
+        if(this->func_ON != nullptr){
+            this->func_ON();
+        }
     }
+    return err;
+}
 
-    return ALL_OK;
+ErrorList Relay::disable(){
+    this->enableWork = false;
+    this->offState();
+}
+
+
+ErrorList Relay::enable(){
+    this->enableWork = true;
 }
 
     /**
@@ -101,19 +109,18 @@ bool Relay::changeState(){
 
 ErrorList Relay::offState(){
     ErrorList err = this->checkValues();
-    if(err != ALL_OK){
-        return err;
+    if(err == ALL_OK){
+        this->status = false;
     }
-    this->status = false;
+    
     return err;
 }
 
 ErrorList Relay::onState(){
     ErrorList err = this->checkValues();
-    if(err != ALL_OK){
-        return err;
+    if(err == ALL_OK){
+        this->status = true;
     }
-    this->status = true;
     return err;
 }
 
