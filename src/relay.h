@@ -1,5 +1,14 @@
+
+/**
+ * @file Relay.h
+ * @version 1.0
+ * 
+ * @copyright Copyright (c) 2024
+ * @author Igor Co (or IgorIoT13)
+ */
 #ifndef RELAY
 #define RELAY
+
 #include <Arduino.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
@@ -8,12 +17,10 @@
 #include "ErrorList.h"
 
 /**
- * @version 1.0
- * @brief Class for relay 
+ * @brief Class for controle relay
  * 
- * @author Igor Co
  * 
- * */
+ */
 class Relay{
     private:
         uint8_t pinRelay;

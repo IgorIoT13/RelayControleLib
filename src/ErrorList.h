@@ -1,5 +1,16 @@
+/**
+ * @file ErrorList.h
+ * @brief 
+ * 
+ * @copyright Copyright (c) 2024
+ * @addtogroup ERROR
+ * {
+ */
+
 #ifndef ERR_BLOCK
 #define ERR_BLOCK
+
+
 
 typedef enum ErrorList{
     ALL_OK,
@@ -11,3 +22,7 @@ typedef enum ErrorList{
 }ErrorList;
 
 #endif
+
+/**
+ * }
+ */
